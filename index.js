@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const cors = require('cors');
 
@@ -31,6 +31,12 @@ async function run(){
             res.send(result);
         });
 
+        app.get(`/api/watches/:id`, async (req,res) =>{
+            const id = req.params.id;
+            const query = ObjectId(id);
+            const result = await watchCollection.findOne(query);
+            res.send(result);
+        });
     }finally {
 
     }
