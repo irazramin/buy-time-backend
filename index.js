@@ -22,6 +22,7 @@ async function run(){
     client.connect();
 
     const watchCollection = client.db('watchdb').collection('watchCollections');
+    const cartCollection = client.db('watchdb').collection('cartCollections');
 
     try {
 
@@ -37,6 +38,12 @@ async function run(){
             const result = await watchCollection.findOne(query);
             res.send(result);
         });
+
+        app.post('/api/addtocart', async (req,res) =>{
+            const cartData = req.body;
+            const result = await cartCollection.insertOne(cartData);
+            res.send(result);
+        })
     }finally {
 
     }
